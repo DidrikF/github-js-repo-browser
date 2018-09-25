@@ -1,6 +1,6 @@
 # github-js-repo-browser
 
-> A web page thimple app that enables browsing of the most polupar javaScript modules on Github.s modules on GitHub.at enables browsing of the most popular js modules on GitHub.
+> A simple app that enables browsing of the most popular JavaScript modules on GitHub.
 
 ## Build Setup
 
