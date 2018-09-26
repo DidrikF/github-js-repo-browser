@@ -36,25 +36,22 @@ export default {
       repos: [],
       firstRepoOnPage: 1,
       currentGitHubPageLoaded: 1,
-      reposPerPage: 20,
-      reposPerRequest: 100,
       githubLink: '',
-      maxPageNumber: 50,
     }
   },
-  props: ['link'],
+  props: ['link', 'pageNavigationSpan', 'maxPageNumber', 'reposPerRequest', 'reposPerPage'],
   computed: {
     /**
-     * Computed property returning an array of the page numbers that are currently navigable. That is; the current page pluss/minus 5, the first and last page.
+     * Computed property returning an array of the page numbers that are currently navigable. That is; the current page pluss/minus pageNavigationSpan, the first and last page.
      * Only the first 1000 repositories from 'https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=100&page=X'
      * are avialable for consumption. This is why 50 is hard-coded as the highest page number
      */
     currentPagesNavigable () {
-      const navigablePages = range(this.currentPage-5, this.currentPage+6);
-      if (this.currentPage-5 > 1) {
+      const navigablePages = range(this.currentPage-this.pageNavigationSpan, this.currentPage+this.pageNavigationSpan+1);
+      if (this.currentPage-this.pageNavigationSpan > 1) {
         navigablePages.unshift(1)
       }
-      if (this.currentPage+6 < this.maxPageNumber) {
+      if (this.currentPage+this.pageNavigationSpan+1 < this.maxPageNumber) {
         navigablePages.push(this.maxPageNumber)
       }
       return navigablePages.filter(page => (page >= 1) && (page <= this.maxPageNumber)) 
@@ -64,11 +61,11 @@ export default {
      * Computed property returrning an array of the 20 elements that corresponds to the current page.
      */
     currentlyDislayedRepos () {
-      // Used as a reference point for the rank prop passed down to the RepositoryTableRow components. 
+      /* Used as a reference point for the rank prop passed down to the RepositoryTableRow components. */
       this.firstRepoOnPage = (this.currentPage-1)*this.reposPerPage
 
-      const firstRepo = Math.floor(((this.currentPage-1)*this.reposPerPage) % 100)
-      const lastRepo = firstRepo + 20
+      const firstRepo = Math.floor(((this.currentPage-1)*this.reposPerPage) % this.reposPerRequest)
+      const lastRepo = firstRepo + this.reposPerPage
 
       return this.repos.slice(firstRepo, lastRepo)
     }

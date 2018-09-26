@@ -42,11 +42,6 @@ import dataFormat from 'dateformat'
 
 export default {
   name: 'RepositoryTableRow',
-  data () {
-    return {
-      
-    }
-  },
   props: ['repo', 'rank'],
   methods: {
     /**

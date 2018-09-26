@@ -5,7 +5,13 @@
 
         <p>The most popular JavaScript packages on GitHub</p>
     </div>
-    <paginated-repository-browser :link='link'></paginated-repository-browser>
+    <paginated-repository-browser 
+        :link='repoBrowserConfig.link'
+        :repos-per-page='repoBrowserConfig.reposPerPage'
+        :repos-per-request='repoBrowserConfig.reposPerRequest'
+        :max-page-number='repoBrowserConfig.maxPageNumber'
+        :page-navigation-span='repoBrowserConfig.pageNavigationSpan'
+    ></paginated-repository-browser>
   </div>
 </template>
 
@@ -16,7 +22,13 @@ export default {
   name: 'App',
   data () {
       return {
-            link: 'https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=100',
+          repoBrowserConfig: {
+                link: 'https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=100',
+                reposPerPage: 20,
+                reposPerRequest: 100, // Can not be changed with current implementation
+                maxPageNumber: 50,
+                pageNavigationSpan: 5,
+            }
         }
   },
   components: {
