@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <img class="Banner__logo" src="./assets/GitHub-Logos/GitHub_Logo.png">
-    <img class="Banner__logo" src="./assets/js_logo.png">
-    <span>Repos</span>
-    <paginated-repository-browser :link='config.link' :repos-per-page='config.elementsPerPage' :repos-per-requenst='config.reposPerRequest'></paginated-repository-browser>
+    <div class="Banner">
+        <img class="Banner__logo" src="./assets/GitHub_Logo.png">
+
+        <p>The most popular JavaScript packages on GitHub</p>
+    </div>
+    <paginated-repository-browser :link='link'></paginated-repository-browser>
   </div>
 </template>
 
@@ -14,12 +16,8 @@ export default {
   name: 'App',
   data () {
       return {
-          config: {
-                link: 'https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=100',
-                elementsPerPage: 20,
-                reposPerRequest: 100,
-          },
-      }
+            link: 'https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=100',
+        }
   },
   components: {
     PaginatedRepositoryBrowser
@@ -29,16 +27,17 @@ export default {
 
 <style>
 
-/* Global Styles goes here */
-
 #app {
     width: 800px;
     margin: 0 auto;
 }
 
-.Banner__logo {
-    max-height: 70px
+.Banner {
+    text-align: center;
+}
 
+.Banner__logo {
+    max-height: 70px;
 }
 
 </style>
